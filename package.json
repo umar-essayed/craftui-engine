@@ -1,0 +1,22 @@
+{
+  "name": "craftui-engine",
+  "version": "1.0.0",
+  "description": "Standard protocol and toolkit for diagnosing and refactoring AI-generated UI/UX slop into high-density B2B ERP/POS interfaces",
+  "main": "index.js",
+  "scripts": {
+    "test": "node tests/validate-skill.js"
+  },
+  "keywords": [
+    "antigravity",
+    "claude",
+    "cursor",
+    "ui-ux",
+    "b2b",
+    "de-ai",
+    "skill",
+    "erp",
+    "pos"
+  ],
+  "author": "Omar / CraftUI Engine Contributors",
+  "license": "MIT"
+}
