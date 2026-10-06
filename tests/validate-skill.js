@@ -74,12 +74,14 @@ assert(opFlowsContent.includes('IndexedDB'), 'operational-flows.md must document
 
 console.log('✅ Critical domain rules (BOM, 80mm Print, Local Storage) verified');
 
-// 5. Validate CLI Scanner & CI Workflows
+// 5. Validate CLI Scanner, Installers & CI Workflows
 const cliPath = path.join(ROOT_DIR, 'bin/craftui.js');
 assert(fs.existsSync(cliPath), 'CLI executable bin/craftui.js must exist');
 const ciPath = path.join(ROOT_DIR, '.github/workflows/ci.yml');
 assert(fs.existsSync(ciPath), 'GitHub Actions CI workflow .github/workflows/ci.yml must exist');
-console.log('✅ CLI Scanner & GitHub Actions CI verified');
+assert(fs.existsSync(path.join(ROOT_DIR, 'install.sh')), 'install.sh must exist');
+assert(fs.existsSync(path.join(ROOT_DIR, 'install.ps1')), 'install.ps1 must exist');
+console.log('✅ CLI Scanner, Universal Installers (sh/ps1), & GitHub Actions CI verified');
 
 // 6. Validate Built-in Code Snippets
 const snippets = [

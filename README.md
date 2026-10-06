@@ -53,70 +53,114 @@ craftui-engine/
 
 ---
 
-## 🛠️ Installation & Setup Across AI Coding Tools
+---
 
-### 1. Google Antigravity CLI (`agy`) & IDE
+## ⚡ 1-Line Universal Installers (تثبيت بأمر واحد)
 
-#### Option A: Workspace Skill (Project Specific)
-Place the skill inside your project's `.agents/skills/` directory:
+Run **one single command** in your terminal. You can choose either:
+- **Local (`--local`)**: Installs directly into your current project workspace (`.agents/skills/craftui-engine`).
+- **Global (`--global`)**: Installs machine-wide (`~/.gemini/config/skills/craftui-engine`), making it instantly available in **every project** on your system.
+
+### 🐧 Linux & 🍎 macOS (Terminal / Bash / Zsh)
+
+#### Option 1: Local (Current Project Workspace)
 ```bash
-mkdir -p .agents/skills/craftui-engine
-cp -r /path/to/craftui-engine/* .agents/skills/craftui-engine/
-```
-Antigravity automatically discovers it via **progressive disclosure**.
-
-#### Option B: Global Machine Skill (Available Everywhere)
-Install it in your user configuration directory:
-```bash
-mkdir -p ~/.gemini/config/skills/craftui-engine
-cp -r /path/to/craftui-engine/* ~/.gemini/config/skills/craftui-engine/
+curl -fsSL https://raw.githubusercontent.com/umar-essayed/craftui-engine/main/install.sh | bash
 ```
 
-**How to trigger in Antigravity:**
-Simply prompt the agent:
-> *"Audit this project's UI/UX using CraftUI Engine and convert it to high-density B2B standards."*
-> or: *"Apply craftui-engine to refactor the cashier and engine forms."*
+#### Option 2: Global (Machine-Wide / All Projects)
+```bash
+curl -fsSL https://raw.githubusercontent.com/umar-essayed/craftui-engine/main/install.sh | bash -s -- --global
+```
 
 ---
 
-### 2. Claude Code (`claude`)
+### 🪟 Windows (PowerShell)
 
-#### Option A: Global Slash Command / Memory
-Add the contents or reference to your project's `CLAUDE.md`:
+#### Option 1: Local (Current Project Workspace)
+```powershell
+irm https://raw.githubusercontent.com/umar-essayed/craftui-engine/main/install.ps1 | iex
+```
+
+#### Option 2: Global (Machine-Wide / All Projects)
+```powershell
+& ([scriptblock]::Create((irm https://raw.githubusercontent.com/umar-essayed/craftui-engine/main/install.ps1))) -Global
+```
+
+---
+
+### 🌐 Cross-Platform via NPX (Any OS with Node.js)
+
+#### Option 1: Local
+```bash
+npx github:umar-essayed/craftui-engine install --local
+```
+
+#### Option 2: Global
+```bash
+npx github:umar-essayed/craftui-engine install --global
+```
+
+---
+
+## 🎮 How to Trigger & Use CraftUI Engine Inside Each AI Tool
+
+### 1. Google Antigravity (CLI & Antigravity IDE)
+
+#### How It Works Under the Hood:
+Antigravity discovers skills via **Progressive Disclosure**:
+- If installed **Locally**, it loads from `.agents/skills/craftui-engine/SKILL.md`.
+- If installed **Globally**, it loads from `~/.gemini/config/skills/craftui-engine/SKILL.md` (`%USERPROFILE%\.gemini\...` on Windows).
+- You don't need to configure anything else; the agent automatically indexes the skill's name and description.
+
+#### Exact Prompts to Use in Chat / Terminal:
+
+* **شامل: فحص وتدقيق المشروع بالكامل (Full Audit):**
+  > *"حلل واجهات هذا المشروع باستخدام سكيل craftui-engine واكتب لي تقرير audit كامل يوضح عيوب الـ AI Slop وخطة المعالجة."*
+
+* **تطهير واجهة كاشير ونقاط بيع (POS Refactoring):**
+  > *"استخدم craftui-engine لإعادة بناء شاشة الدفع في `src/pages/Checkout.tsx`: طبق قاعدة الـ 1-Click Cash، اختصارات الكيبورد (Enter/Esc/F2)، وهيئ الميديا للطباعة الحرارية 80mm."*
+
+* **تبسيط الفورمات الطويلة (Form De-bloat):**
+  > *"طبق قاعدة الـ 4 حقول الأساسية من سكيل craftui-engine على فورم إضافة الصنف `src/components/ProductForm.tsx`، وضع باقي الحقول في أكورديون قابل للطي."*
+
+* **حل مشاكل الإكسل والعربي (Arabic Excel Export):**
+  > *"استخدم كود `snippets/arabicCsvExport.ts` من السكيل عشان تعالج مشكلة تشفير الحروف العربية في ملفات الإكسل بإضافة \uFEFF BOM."*
+
+---
+
+### 2. Cursor & Windsurf
+
+When installed locally, the installer automatically creates `.cursor/rules/craftui-engine.mdc` (or you can use `.cursorrules`).
+
+#### In Cursor Composer (`Ctrl+I` / `Cmd+I`) or Chat (`Ctrl+L` / `Cmd+L`):
+Simply tag or mention the skill in your prompt:
+> *"@craftui-engine Refactor `src/components/DataTable.tsx` to high-density B2B standards. Remove all shadows, make row heights 38px, and use tabular-nums for numeric figures."*
+
+> *"@craftui-engine Clean up this form using the 4-Vital-Field rule."*
+
+---
+
+### 3. Claude Code (`claude` CLI)
+
+Add a reference to your project's `CLAUDE.md`:
 ```markdown
-## UI/UX Refactoring Protocol
-When redesigning or reviewing UI components, adhere strictly to the rules in `craftui-engine/SKILL.md`:
-- Eliminate glowing shadows and marketing filler.
-- Enforce the 4-Vital-Field rule for forms.
-- Ensure 80mm thermal receipt and UTF-8 BOM CSV exports.
+## UI/UX Engineering Protocol
+Strictly adhere to `craftui-engine` rules (in `.agents/skills/craftui-engine/SKILL.md`):
+- Strip glows, neons, and marketing filler text.
+- Enforce compact tabular density and 80mm thermal receipt styles.
+- Always include UTF-8 BOM (\uFEFF) in CSV exports.
 ```
 
-#### Option B: Dedicated Prompt Trigger
+#### In the CLI:
 ```bash
-claude "Review src/components using the CraftUI Engine protocol in craftui-engine/SKILL.md and eliminate all AI visual fluff."
+claude "Review src/views using craftui-engine guidelines and eradicate visual fluff"
 ```
 
 ---
 
-### 3. Cursor & Windsurf
-
-#### Project Rules (`.cursorrules` or `.windsurfrules`)
-Add this block to your `.cursorrules`:
-```markdown
-# CraftUI Engine Protocol
-For any frontend or UI/UX task:
-1. Always follow the guidelines in `craftui-engine/SKILL.md` and `craftui-engine/references/anti-patterns.md`.
-2. Do not use decorative box-shadows, neon colors, or more than 2 accent colors.
-3. Keep data tables high-density with tabular numbers (`tabular-nums`).
-4. Ensure primary actions (e.g. checkout) have 1-click workflows.
-```
-
----
-
-### 4. Custom GPTs / Claude Projects / Standalone LLMs
-You can copy the raw markdown from [SKILL.md](./SKILL.md) and paste it directly into the System Prompt or Custom Instructions of any LLM.
-
----
+### 4. Custom GPTs & Web LLMs (ChatGPT / Claude Projects)
+You can directly paste the raw markdown from [SKILL.md](./SKILL.md) into the **System Prompt** or **Project Knowledge** of Claude or ChatGPT.
 
 ---
 

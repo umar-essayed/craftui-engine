@@ -164,14 +164,92 @@ function runScanner(targetPath = '.') {
   return allFindings.length;
 }
 
+function copyDirRecursive(src, dest) {
+  fs.mkdirSync(dest, { recursive: true });
+  const entries = fs.readdirSync(src, { withFileTypes: true });
+  for (const entry of entries) {
+    const srcPath = path.join(src, entry.name);
+    const destPath = path.join(dest, entry.name);
+    if (entry.isDirectory()) {
+      copyDirRecursive(srcPath, destPath);
+    } else {
+      fs.copyFileSync(srcPath, destPath);
+    }
+  }
+}
+
+function runInstaller(options = {}) {
+  const isGlobal = options.global === true;
+  const os = require('os');
+  const homeDir = os.homedir();
+  const rootDir = path.resolve(__dirname, '..');
+
+  console.log(`\n${ANSI.bold}${ANSI.cyan}🚀 CraftUI Engine - Universal Installer${ANSI.reset}\n`);
+
+  let targetDir = '';
+  if (isGlobal) {
+    targetDir = path.join(homeDir, '.gemini', 'config', 'skills', 'craftui-engine');
+  } else {
+    targetDir = path.resolve(process.cwd(), '.agents', 'skills', 'craftui-engine');
+  }
+
+  fs.mkdirSync(targetDir, { recursive: true });
+
+  const itemsToCopy = ['SKILL.md', 'references', 'templates', 'snippets'];
+  for (const item of itemsToCopy) {
+    const src = path.join(rootDir, item);
+    const dest = path.join(targetDir, item);
+    if (fs.existsSync(src)) {
+      if (fs.statSync(src).isDirectory()) {
+        copyDirRecursive(src, dest);
+      } else {
+        fs.copyFileSync(src, dest);
+      }
+    }
+  }
+
+  // If local, configure Cursor rule as well
+  if (!isGlobal) {
+    const cursorRulesDir = path.resolve(process.cwd(), '.cursor', 'rules');
+    fs.mkdirSync(cursorRulesDir, { recursive: true });
+    const ruleContent = `---
+description: CraftUI Engine B2B High-Density & De-AI refactoring protocol
+globs: *.{tsx,jsx,vue,svelte,html,css,ts,js}
+alwaysApply: false
+---
+When reviewing or writing frontend UI/UX, follow craftui-engine protocol:
+1. No glowing box-shadows or neon decorations.
+2. High density: compact table rows (38px) and tabular-nums.
+3. Form rule: 4 vital fields upfront, accordion for extras.
+4. Support 80mm thermal receipts and UTF-8 BOM (\\uFEFF) on Arabic CSV.
+`;
+    fs.writeFileSync(path.join(cursorRulesDir, 'craftui-engine.mdc'), ruleContent, 'utf8');
+  }
+
+  console.log(`${ANSI.green}✅ Successfully installed CraftUI Engine in:${ANSI.reset} ${targetDir}`);
+  if (isGlobal) {
+    console.log(`${ANSI.cyan}⚡ Available machine-wide across ALL projects for Google Antigravity & AI agents!${ANSI.reset}\n`);
+  } else {
+    console.log(`${ANSI.cyan}⚡ Also configured .cursor/rules/craftui-engine.mdc for Cursor / Windsurf!${ANSI.reset}\n`);
+  }
+}
+
 const args = process.argv.slice(2);
 const command = args[0] || 'scan';
-const target = args[1] || '.';
 
 if (command === 'scan') {
+  const target = args[1] || '.';
   const issues = runScanner(target);
   process.exit(issues > 0 ? 1 : 0);
+} else if (command === 'install') {
+  const isGlobal = args.includes('--global') || args.includes('-g');
+  runInstaller({ global: isGlobal });
+  process.exit(0);
 } else {
-  console.log(`Usage: craftui scan <directory>`);
+  console.log(`${ANSI.bold}CraftUI Engine CLI${ANSI.reset}`);
+  console.log(`Commands:`);
+  console.log(`  craftui scan [dir]              Scan directory for AI Slop anti-patterns`);
+  console.log(`  craftui install [--local]       Install skill into current project (.agents/skills/)`);
+  console.log(`  craftui install --global        Install skill globally (~/.gemini/config/skills/)`);
   process.exit(0);
 }
