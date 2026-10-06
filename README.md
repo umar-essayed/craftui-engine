@@ -27,7 +27,15 @@ CraftUI Engine provides the automated rules, checklists, and heuristics to compl
 
 ```text
 craftui-engine/
-├── SKILL.md                 # Core skill instructions with YAML frontmatter
+├── bin/
+│   └── craftui.js           # CLI Scanner tool for automated AI Slop audits
+├── snippets/                # Ready-to-use production B2B components & hooks
+│   ├── ThermalReceipt80mm.tsx   # 80mm ESC/POS cash register receipt
+│   ├── CompactDataTable.tsx     # High-density data grid with tabular-nums
+│   ├── ProgressiveAccordionForm.tsx # 4-Vital-Fields progressive form
+│   ├── useKeyboardPOS.ts        # Keyboard shortcuts & barcode hook
+│   ├── arabicCsvExport.ts       # UTF-8 BOM (\uFEFF) Arabic Excel exporter
+│   └── localBinaryStore.ts      # IndexedDB binary isolation store
 ├── references/
 │   ├── anti-patterns.md     # Comprehensive catalog of AI UI/UX anti-patterns & fixes
 │   ├── b2b-design-system.md # Quiet slate palette, spacing tokens & typography rules
@@ -37,6 +45,9 @@ craftui-engine/
 │   └── de-ai-checklist.md   # Step-by-step refactoring execution checklist
 ├── tests/
 │   └── validate-skill.js    # Automated compliance test suite
+├── .github/workflows/
+│   └── ci.yml               # Automated GitHub Actions test pipeline
+├── SKILL.md                 # Core skill instructions with YAML frontmatter
 └── README.md                # Comprehensive installation & usage guide
 ```
 
@@ -107,6 +118,41 @@ You can copy the raw markdown from [SKILL.md](./SKILL.md) and paste it directly 
 
 ---
 
+---
+
+## ⚡ Automated CLI Code Scanner
+
+Audit any existing frontend project for AI Slop defects with a single command:
+
+```bash
+# Scan current project
+node path/to/craftui-engine/bin/craftui.js scan ./src
+
+# Or via npm script if installed locally
+npm run scan ./src
+```
+
+### What does the scanner detect?
+- **P0**: Decorative glowing box-shadows (`shadow-[0_0_...px]`, neon color dropshadows).
+- **P0**: CSV blob exports missing `\uFEFF` UTF-8 Byte Order Mark for Arabic Excel.
+- **P1**: Excessive corner rounding (`rounded-3xl` / `rounded-2xl`) on business grids.
+- **P1**: Chatty AI marketing greetings and filler titles.
+- **P2**: Overly loose padding (`py-8`, `py-10`) harming information density.
+
+---
+
+## 📦 Ready-to-Use Production Snippets
+
+CraftUI Engine provides production-ready React & TypeScript templates inside [`snippets/`](./snippets/):
+- **[ThermalReceipt80mm.tsx](./snippets/ThermalReceipt80mm.tsx)**: ESC/POS 80mm continuous thermal receipt layout with `@media print`.
+- **[CompactDataTable.tsx](./snippets/CompactDataTable.tsx)**: High-density data table with monospaced tabular numbers and hover scanning.
+- **[ProgressiveAccordionForm.tsx](./snippets/ProgressiveAccordionForm.tsx)**: 4-Vital-Fields progressive disclosure modal form.
+- **[useKeyboardPOS.ts](./snippets/useKeyboardPOS.ts)**: Keyboard shortcut listener for F2 quick cash and Escape modal dismissal.
+- **[arabicCsvExport.ts](./snippets/arabicCsvExport.ts)**: Bulletproof Arabic UTF-8 BOM CSV exporter.
+- **[localBinaryStore.ts](./snippets/localBinaryStore.ts)**: Client-side IndexedDB store preventing cloud document quota overruns.
+
+---
+
 ## 🧪 Testing & Verification
 
 CraftUI Engine comes with an automated specification and integrity test suite:
@@ -116,8 +162,9 @@ npm test
 ```
 Verifies:
 - Frontmatter specification and required fields.
-- Reference and template integrity.
+- Reference, template, and code snippet integrity.
 - Critical domain rules (BOM `\uFEFF`, 80mm print standards, IndexedDB binary isolation).
+- GitHub Actions CI and CLI scanner availability.
 
 ---
 

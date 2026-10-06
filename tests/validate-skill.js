@@ -74,4 +74,29 @@ assert(opFlowsContent.includes('IndexedDB'), 'operational-flows.md must document
 
 console.log('✅ Critical domain rules (BOM, 80mm Print, Local Storage) verified');
 
+// 5. Validate CLI Scanner & CI Workflows
+const cliPath = path.join(ROOT_DIR, 'bin/craftui.js');
+assert(fs.existsSync(cliPath), 'CLI executable bin/craftui.js must exist');
+const ciPath = path.join(ROOT_DIR, '.github/workflows/ci.yml');
+assert(fs.existsSync(ciPath), 'GitHub Actions CI workflow .github/workflows/ci.yml must exist');
+console.log('✅ CLI Scanner & GitHub Actions CI verified');
+
+// 6. Validate Built-in Code Snippets
+const snippets = [
+  'snippets/arabicCsvExport.ts',
+  'snippets/ThermalReceipt80mm.tsx',
+  'snippets/CompactDataTable.tsx',
+  'snippets/ProgressiveAccordionForm.tsx',
+  'snippets/useKeyboardPOS.ts',
+  'snippets/localBinaryStore.ts'
+];
+
+for (const snip of snippets) {
+  const snipPath = path.join(ROOT_DIR, snip);
+  assert(fs.existsSync(snipPath), `Snippet file ${snip} must exist`);
+  const content = fs.readFileSync(snipPath, 'utf8');
+  assert(content.length > 200, `Snippet file ${snip} must have meaningful code content (> 200 bytes)`);
+  console.log(`✅ Code snippet verified: ${snip}`);
+}
+
 console.log('\n🎉 ALL TESTS PASSED! CraftUI Engine specification is 100% compliant and ready for deployment.');

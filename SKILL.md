@@ -83,10 +83,21 @@ Before declaring any refactor complete, verify against:
 
 ---
 
-## 4. Supporting Resources & References
+## 4. Supporting Resources, Snippets & Tooling
 
 - [Anti-Patterns Diagnostic Catalog](./references/anti-patterns.md)
 - [B2B Design System & Typography Rules](./references/b2b-design-system.md)
 - [Operational Flows, Cashier & Printing Guide](./references/operational-flows.md)
 - [Audit Report Template](./templates/audit-report.md)
 - [De-AI Step-by-Step Checklist](./templates/de-ai-checklist.md)
+
+### Ready-to-Use Code Snippets & Boilerplates
+- [ThermalReceipt80mm.tsx](./snippets/ThermalReceipt80mm.tsx) - Continuous 80mm cash receipt with `@media print`.
+- [CompactDataTable.tsx](./snippets/CompactDataTable.tsx) - High-density tabular grid with `tabular-nums`.
+- [ProgressiveAccordionForm.tsx](./snippets/ProgressiveAccordionForm.tsx) - 4-Vital-Fields progressive form.
+- [useKeyboardPOS.ts](./snippets/useKeyboardPOS.ts) - 1-Click cash shortcut and barcode scanner hook.
+- [arabicCsvExport.ts](./snippets/arabicCsvExport.ts) - Arabic Excel UTF-8 BOM (`\uFEFF`) exporter.
+- [localBinaryStore.ts](./snippets/localBinaryStore.ts) - IndexedDB local binary isolation and backup check.
+
+### Automated Code Scanner (CLI)
+Run `node bin/craftui.js scan <dir>` or `npx craftui scan <dir>` to audit source code for AI Slop anti-patterns.
